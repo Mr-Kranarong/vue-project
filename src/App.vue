@@ -2,20 +2,21 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-    <ToDoPage/>
+    <!-- <ToDoPage/> -->
+    <ArchivePage/>
     <!--<task-list></task-list>-->
   </div>
 </template>
 
 <script>
 //import HelloWorld from './components/HelloWorld.vue'
-import ToDoPage from './pages/ToDoPage.vue'
-//import TaskList from './components/TaskList.vue'
+//mport ToDoPage from './pages/ToDoPage.vue'
+import ArchivePage from './pages/ArchivePage'
 
 export default {
   name: 'App',
   components: {
-    ToDoPage
+    ArchivePage
   }
 }
 </script>
