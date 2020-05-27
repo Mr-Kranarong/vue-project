@@ -1,9 +1,22 @@
 <template>
     <div class="container">
+
+        <div class="add-task">
+            <input id="new-task" type="text" v-model="newTask" maxlength="8"><br>
+            <button type="button" @click="addTask(newTask)">Add New Task</button>
+        </div>
+
         <div class="task-zone">
             <div class="drop-zone" @drop="onDrop($event,'NEED TO BE DONE')" @dragenter.prevent @dragover.prevent>
                 <h1>What Need To Be Done</h1>
-                <div class="drag-el" draggable @dragstart="onStart($event,task)" v-for="task in needToBeDone" :key="task.id">{{task.title}}</div>
+                <div class="drag-el" draggable @dragstart="onStart($event,task)" v-for="task in needToBeDone" :key="task.id">
+                    <span v-if="editTask != task.id">{{task.title}}</span>
+                    <input v-else class="edit-task" type="text" v-model="task.title">
+                    <br>
+                    <button v-if="editTask != task.id" type="button" @click="onEdit(task)">Edit</button>
+                    <button v-else type="button" @click="onSave(task)">Save</button>
+                    <button type="button" @click="onDelete(task.id)">Delete</button>
+                </div>
             </div>
             <div class="drop-zone" @drop="onDrop($event,'BEING DONE')" @dragenter.prevent @dragover.prevent>
                 <h1>Das Kapital</h1>
@@ -68,7 +81,9 @@ export default {
                     title: 'Item I',
                     status: 'BEING DONE'
                 }
-            ]
+            ],
+            newTask: "",
+            editTask:""
         }
     },
     computed:{
@@ -92,13 +107,30 @@ export default {
             let taskid = e.dataTransfer.getData('taskId')
             let found = this.tasks.find(task => task.id == taskid)
             found.status = newStatus
+        },
+        addTask(newTask){
+            let newId = this.tasks.length+1
+            let str = newTask
+            this.tasks.push({id:newId,title:"Item "+str.toUpperCase(),status:'NEED TO BE DONE'})
+            this.newTask = ""
+        },
+        onEdit(task){
+            this.editTask = task.id
+        },
+        onSave(updateTask){
+            let thisTask = this.tasks.find(task=>task.id == updateTask.id)
+            thisTask.title = updateTask.title
+            this.editTask = null
+        },
+        onDelete(deleteTaskId){
+            this.tasks = this.tasks.filter(task=>task.id != deleteTaskId)
         }
     }
 }
 </script>
 
 <style scoped>
-.container{
+.container,.add-task{
     margin: 30px 0;
 }
 .task-zone{
@@ -111,7 +143,7 @@ export default {
     min-height: 400px;
     margin: 0 30px;
     border-radius: 20px;
-    padding: 10px 0;
+    padding: 15px 0;
     transition: .3s;
     background-color:white;
 }
@@ -122,7 +154,6 @@ export default {
 .drag-el{
     border: 1px solid black;
     width: 200px;
-    height: 40px;
     margin: 5px auto;
     padding-top: 15px;
     border-radius: 10px;
@@ -133,5 +164,13 @@ export default {
     border-radius: 30px;
     transition: .3s;
     transform: scale(1.2) rotate(-5deg);
+}
+button{
+    display: inline-block;
+    background-color: white;
+    border-radius: 10px;
+    outline: none;
+    border: 1px solid black;
+    width: 40%;
 }
 </style>
