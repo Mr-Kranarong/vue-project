@@ -1,0 +1,30 @@
+{
+    "tasks": [
+      { "id": 1, "title": "run 1 km.", "status": "NEED TO BE DONE" },
+      { "id": 2, "title": "read a book", "status": "NEED TO BE DONE" },
+      { "id": 3, "title": "dinner with friend", "status": "BEING DONE" },
+      { "id": 4, "title": "do homework", "status": "HAS BEEN DONE" }
+    ],
+    "archives": [
+      { 
+        "date": "22-05-2020", 
+        "time": "19:00", 
+        "tasks": [
+          { "id": 1, "title": "learn vue.js", "status": "HAS BEEN DONE" },
+          { "id": 2, "title": "play a game 5 round", "status": "HAS BEEN DONE" },
+          { "id": 3, "title": "buy a soap", "status": "HAS BEEN DONE" },
+          { "id": 4, "title": "pay for a gift", "status": "HAS BEEN DONE" }
+        ] 
+      },
+      { 
+        "date": "23-05-2020", 
+        "time": "19:00", 
+        "tasks": [
+          { "id": 1, "title": "watch netflix", "status": "HAS BEEN DONE" },
+          { "id": 2, "title": "go to event", "status": "HAS BEEN DONE" },
+          { "id": 3, "title": "excercise", "status": "HAS BEEN DONE" },
+          { "id": 4, "title": "walk to siam", "status": "HAS BEEN DONE" }
+        ] 
+      }
+    ]
+  }

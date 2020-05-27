@@ -20,68 +20,42 @@
             </div>
             <div class="drop-zone" @drop="onDrop($event,'BEING DONE')" @dragenter.prevent @dragover.prevent>
                 <h1>Das Kapital</h1>
-                <div class="drag-el" draggable @dragstart="onStart($event,task)" v-for="task in beingDone" :key="task.id">{{task.title}}</div>
+                <div class="drag-el" draggable @dragstart="onStart($event,task)" v-for="task in beingDone" :key="task.id">
+                    <span v-if="editTask != task.id">{{task.title}}</span>
+                    <input v-else class="edit-task" type="text" v-model="task.title">
+                    <br>
+                    <button v-if="editTask != task.id" type="button" @click="onEdit(task)">Edit</button>
+                    <button v-else type="button" @click="onSave(task)">Save</button>
+                    <button type="button" @click="onDelete(task.id)">Delete</button>
+                </div>
             </div>
             <div class="drop-zone" @drop="onDrop($event,'HAS BEEN DONE')" @dragenter.prevent @dragover.prevent>
                 <h1>What Has Been Done</h1>
-                <div class="drag-el" draggable @dragstart="onStart($event,task)" v-for="task in hasBeenDone" :key="task.id">{{task.title}}</div>
+                <div class="drag-el" draggable @dragstart="onStart($event,task)" v-for="task in hasBeenDone" :key="task.id">
+                    <span v-if="editTask != task.id">{{task.title}}</span>
+                    <input v-else class="edit-task" type="text" v-model="task.title">
+                    <br>
+                    <button v-if="editTask != task.id" type="button" @click="onEdit(task)">Edit</button>
+                    <button v-else type="button" @click="onSave(task)">Save</button>
+                    <button type="button" @click="onDelete(task.id)">Delete</button>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
-    name: 'TaskList',
+    async created(){
+        let {data} = await axios.get('http://localhost:3000/tasks')
+        console.log("axios ::: ", data)
+        this.tasks = data;
+    },
     data(){
         return{
-            tasks:[
-                {
-                    id: 1,
-                    title: 'Item A',
-                    status: 'HAS BEEN DONE'
-                },
-                {
-                    id: 2,
-                    title: 'Item B',
-                    status: 'NEED TO BE DONE'
-                },
-                {
-                    id: 3,
-                    title: 'Item C',
-                    status: 'BEING DONE'
-                },
-                {
-                    id: 4,
-                    title: 'Item D',
-                    status: 'HAS BEEN DONE'
-                },
-                {
-                    id: 5,
-                    title: 'Item E',
-                    status: 'NEED TO BE DONE'
-                },
-                {
-                    id: 6,
-                    title: 'Item F',
-                    status: 'BEING DONE'
-                },
-                {
-                    id: 7,
-                    title: 'Item G',
-                    status: 'HAS BEEN DONE'
-                },
-                {
-                    id: 8,
-                    title: 'Item H',
-                    status: 'NEED TO BE DONE'
-                },
-                {
-                    id: 9,
-                    title: 'Item I',
-                    status: 'BEING DONE'
-                }
-            ],
+            tasks:[],
             newTask: "",
             editTask:""
         }

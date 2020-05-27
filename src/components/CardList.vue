@@ -32,6 +32,7 @@ export default {
         width: 600px;
         background-color: white;
         transition: .3s;
+        border-radius: 10px;
     }
     .card:hover{
         transform: scale(1.5);
