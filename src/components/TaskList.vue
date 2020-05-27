@@ -1,17 +1,17 @@
 <template>
     <div class="container">
         <div class="task-zone">
-            <div class="drop-zone">
+            <div class="drop-zone" @drop="onDrop($event,'NEED TO BE DONE')" @dragenter.prevent @dragover.prevent>
                 <h1>What Need To Be Done</h1>
-                <div class="drag-el" v-for="task in needToBeDone" :key="task.id">{{task.title}}</div>
+                <div class="drag-el" draggable @dragstart="onStart($event,task)" v-for="task in needToBeDone" :key="task.id">{{task.title}}</div>
             </div>
-            <div class="drop-zone">
+            <div class="drop-zone" @drop="onDrop($event,'BEING DONE')" @dragenter.prevent @dragover.prevent>
                 <h1>Das Kapital</h1>
-                <div class="drag-el" v-for="task in beingDone" :key="task.id">{{task.title}}</div>
+                <div class="drag-el" draggable @dragstart="onStart($event,task)" v-for="task in beingDone" :key="task.id">{{task.title}}</div>
             </div>
-            <div class="drop-zone">
+            <div class="drop-zone" @drop="onDrop($event,'HAS BEEN DONE')" @dragenter.prevent @dragover.prevent>
                 <h1>What Has Been Done</h1>
-                <div class="drag-el" v-for="task in hasBeenDone" :key="task.id">{{task.title}}</div>
+                <div class="drag-el" draggable @dragstart="onStart($event,task)" v-for="task in hasBeenDone" :key="task.id">{{task.title}}</div>
             </div>
         </div>
     </div>
@@ -81,6 +81,18 @@ export default {
         hasBeenDone(){
             return this.tasks.filter(x => x.status == "HAS BEEN DONE")
         }
+    },
+    methods:{
+        onStart(e, task){
+            e.dataTransfer.dropEffect = "move"
+            e.dataTransfer.effectAllowed = "move"
+            e.dataTransfer.setData('taskId',task.id)
+        },
+        onDrop(e, newStatus){
+            let taskid = e.dataTransfer.getData('taskId')
+            let found = this.tasks.find(task => task.id == taskid)
+            found.status = newStatus
+        }
     }
 }
 </script>
@@ -96,7 +108,7 @@ export default {
 .drop-zone{
     border: 1px solid black;
     width: 100%;
-    height: 400px;
+    min-height: 400px;
     margin: 0 30px;
     border-radius: 20px;
     padding: 10px 0;
@@ -104,6 +116,7 @@ export default {
     background-color:white;
 }
 .drop-zone:hover{
+    transition: .3s;
     transform: rotate(5deg);
 }
 .drag-el{
