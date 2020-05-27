@@ -3,7 +3,7 @@
 
         <div class="add-task">
             <input id="new-task" type="text" v-model="newTask" maxlength="8"><br>
-            <button type="button" @click="addTask(newTask)">Add New Task</button>
+            <button id="add-button" type="button" @click="addTask(newTask)">Add New Task</button>
         </div>
 
         <div class="task-zone">
@@ -155,7 +155,7 @@ export default {
     border: 1px solid black;
     width: 200px;
     margin: 5px auto;
-    padding-top: 15px;
+    padding: 10px;
     border-radius: 10px;
     transition: .3s;
     background-color:white;
@@ -172,5 +172,14 @@ button{
     outline: none;
     border: 1px solid black;
     width: 40%;
+}
+#add-button{
+    width: auto;
+}
+input[type="text"]{
+    outline: none;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 5px;
 }
 </style>

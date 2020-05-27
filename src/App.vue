@@ -1,23 +1,15 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-    <!-- <ToDoPage/> -->
-    <ArchivePage/>
-    <!--<task-list>/</task-list>-->
+    <img alt="Vue logo" src="./assets/logo.png"><br>
+    <router-link to="/">Organize</router-link>
+    <router-link to="/archive">Archive</router-link>
+    <router-view/>
   </div>
 </template>
 
 <script>
-//import HelloWorld from './components/HelloWorld.vue'
-//mport ToDoPage from './pages/ToDoPage.vue'
-import ArchivePage from './pages/ArchivePage'
-
 export default {
-  name: 'App',
-  components: {
-    ArchivePage
-  }
+  name: 'App'
 }
 </script>
 
